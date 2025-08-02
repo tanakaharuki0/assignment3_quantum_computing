@@ -10,7 +10,7 @@ import os # osモジュールをインポート
 aer_sim = Aer.get_backend('aer_simulator')
 
 # figディレクトリが存在しない場合は作成
-output_dir = 'fig'
+output_dir = 'fig_deutsch'
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
