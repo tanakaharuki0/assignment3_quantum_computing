@@ -4,9 +4,15 @@ from qiskit import QuantumCircuit, transpile
 from qiskit_aer import Aer
 from qiskit.visualization import plot_histogram, plot_bloch_multivector
 import numpy as np
+import os # osモジュールをインポート
 
 # Quantum simulator backend
 aer_sim = Aer.get_backend('aer_simulator')
+
+# figディレクトリが存在しない場合は作成
+output_dir = 'fig'
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
 
 def run_circuit_and_get_results(qc):
     """量子回路を実行し、測定結果のヒストグラムとBloch球の状態を返すヘルパー関数"""
@@ -112,9 +118,10 @@ if __name__ == "__main__":
     qc1 = create_case1_circuit()
     counts1, bloch1 = run_circuit_and_get_results(qc1)
     plt.figure(figsize=(8, 4))
-    qc1.draw(output='mpl', filename='case1_circuit.png')
-    bloch1.savefig('case1_bloch.png')
-    plot_histogram(counts1, title="Case 1 Measurement Results").savefig('case1_histogram.png')
+    # ファイルパスをfig/ディレクトリ内へ変更
+    qc1.draw(output='mpl', filename=os.path.join(output_dir, 'case1_circuit.png'))
+    bloch1.savefig(os.path.join(output_dir, 'case1_bloch.png'))
+    plot_histogram(counts1, title="Case 1 Measurement Results").savefig(os.path.join(output_dir, 'case1_histogram.png'))
     print("--- 最後のHゲート適用前のq0とq1の状態 ---")
     # Statevectorシミュレータを使って、最後のHゲート適用直前の状態を計算
     qc1_pre_H = QuantumCircuit(2)
@@ -123,16 +130,16 @@ if __name__ == "__main__":
     qc1_pre_H.h(1)
     state_pre_H1 = Aer.get_backend('statevector_simulator').run(qc1_pre_H).result().get_statevector(qc1_pre_H)
     print(f"Pre-H state (Case 1): {state_pre_H1}")
-    plot_bloch_multivector(state_pre_H1).savefig('case1_bloch_pre_H.png')
+    plot_bloch_multivector(state_pre_H1).savefig(os.path.join(output_dir, 'case1_bloch_pre_H.png'))
 
     # Case 2
     print("\n----- Case 2: Constant (f(x) = 1) -----")
     qc2 = create_case2_circuit()
     counts2, bloch2 = run_circuit_and_get_results(qc2)
     plt.figure(figsize=(8, 4))
-    qc2.draw(output='mpl', filename='case2_circuit.png')
-    bloch2.savefig('case2_bloch.png')
-    plot_histogram(counts2, title="Case 2 Measurement Results").savefig('case2_histogram.png')
+    qc2.draw(output='mpl', filename=os.path.join(output_dir, 'case2_circuit.png'))
+    bloch2.savefig(os.path.join(output_dir, 'case2_bloch.png'))
+    plot_histogram(counts2, title="Case 2 Measurement Results").savefig(os.path.join(output_dir, 'case2_histogram.png'))
     print("--- 最後のHゲート適用前のq0とq1の状態 ---")
     qc2_pre_H = QuantumCircuit(2)
     qc2_pre_H.x(1)
@@ -141,16 +148,16 @@ if __name__ == "__main__":
     qc2_pre_H.x(0)
     state_pre_H2 = Aer.get_backend('statevector_simulator').run(qc2_pre_H).result().get_statevector(qc2_pre_H)
     print(f"Pre-H state (Case 2): {state_pre_H2}")
-    plot_bloch_multivector(state_pre_H2).savefig('case2_bloch_pre_H.png')
+    plot_bloch_multivector(state_pre_H2).savefig(os.path.join(output_dir, 'case2_bloch_pre_H.png'))
 
     # Case 3
     print("\n----- Case 3: Balanced (f(x) = x) -----")
     qc3 = create_case3_circuit()
     counts3, bloch3 = run_circuit_and_get_results(qc3)
     plt.figure(figsize=(8, 4))
-    qc3.draw(output='mpl', filename='case3_circuit.png')
-    bloch3.savefig('case3_bloch.png')
-    plot_histogram(counts3, title="Case 3 Measurement Results").savefig('case3_histogram.png')
+    qc3.draw(output='mpl', filename=os.path.join(output_dir, 'case3_circuit.png'))
+    bloch3.savefig(os.path.join(output_dir, 'case3_bloch.png'))
+    plot_histogram(counts3, title="Case 3 Measurement Results").savefig(os.path.join(output_dir, 'case3_histogram.png'))
     print("--- 最後のHゲート適用前のq0とq1の状態 ---")
     qc3_pre_H = QuantumCircuit(2)
     qc3_pre_H.x(1)
@@ -159,16 +166,16 @@ if __name__ == "__main__":
     qc3_pre_H.cx(0, 1)
     state_pre_H3 = Aer.get_backend('statevector_simulator').run(qc3_pre_H).result().get_statevector(qc3_pre_H)
     print(f"Pre-H state (Case 3): {state_pre_H3}")
-    plot_bloch_multivector(state_pre_H3).savefig('case3_bloch_pre_H.png')
+    plot_bloch_multivector(state_pre_H3).savefig(os.path.join(output_dir, 'case3_bloch_pre_H.png'))
 
     # Case 4
     print("\n----- Case 4: Balanced (f(x) = NOT x) -----")
     qc4 = create_case4_circuit()
     counts4, bloch4 = run_circuit_and_get_results(qc4)
     plt.figure(figsize=(8, 4))
-    qc4.draw(output='mpl', filename='case4_circuit.png')
-    bloch4.savefig('case4_bloch.png')
-    plot_histogram(counts4, title="Case 4 Measurement Results").savefig('case4_histogram.png')
+    qc4.draw(output='mpl', filename=os.path.join(output_dir, 'case4_circuit.png'))
+    bloch4.savefig(os.path.join(output_dir, 'case4_bloch.png'))
+    plot_histogram(counts4, title="Case 4 Measurement Results").savefig(os.path.join(output_dir, 'case4_histogram.png'))
     print("--- 最後のHゲート適用前のq0とq1の状態 ---")
     qc4_pre_H = QuantumCircuit(2)
     qc4_pre_H.x(1)
@@ -178,6 +185,6 @@ if __name__ == "__main__":
     qc4_pre_H.x(1)
     state_pre_H4 = Aer.get_backend('statevector_simulator').run(qc4_pre_H).result().get_statevector(qc4_pre_H)
     print(f"Pre-H state (Case 4): {state_pre_H4}")
-    plot_bloch_multivector(state_pre_H4).savefig('case4_bloch_pre_H.png')
+    plot_bloch_multivector(state_pre_H4).savefig(os.path.join(output_dir, 'case4_bloch_pre_H.png'))
 
-    plt.show() # 全てのプロットを表示
+    # plt.show() # 全てのプロットを表示
