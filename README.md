@@ -51,6 +51,6 @@
 - 上の一括でのパッケージインストールが無理そうならこれでいけるはず（足りないのあるなら各自インストール）：
 
   ```bash
-  pip install qiskit qiskit-aer matplotlib pylatexenc
+  pip install qiskit qiskit-aer matplotlib pylatexenc scikit-learn qiskit-machine-learning
   ```
   
