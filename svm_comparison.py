@@ -148,8 +148,8 @@ def run_classification_experiment(digits, target_digits, dataset_name):
     # 2次元グリッドを作成し、各点でモデルの予測を行う
     x_min, x_max = X_pca[:, 0].min() - 1, X_pca[:, 0].max() + 1
     y_min, y_max = X_pca[:, 1].min() - 1, X_pca[:, 1].max() + 1
-    xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.1),
-                         np.arange(y_min, y_max, 0.1))
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.5),
+                         np.arange(y_min, y_max, 0.5))
 
     # グリッドポイントの特徴量配列
     grid_points = np.c_[xx.ravel(), yy.ravel()]
