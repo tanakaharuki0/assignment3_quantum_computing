@@ -60,7 +60,7 @@ def run_classification_experiment(digits, target_digits, dataset_name):
     """指定された数字のデータセットで分類実験を実行する関数"""
     print(f"\n--- Running experiment for digits {target_digits[0]} and {target_digits[1]} ({dataset_name}) ---")
 
-    # 1. データセットの選択と準備 [cite: 65]
+    # 1. データセットの選択と準備
     idx = np.logical_or(digits.target == target_digits[0], digits.target == target_digits[1])
     X = digits.data[idx]
     y = digits.target[idx]
@@ -95,7 +95,7 @@ def run_classification_experiment(digits, target_digits, dataset_name):
         print(f"    Execution Time: {csvm_train_time:.4f} seconds ")
         print(f"    Accuracy: {csvm_accuracy:.4f} ")
 
-        # 決定境界とデータポイントの可視化 [cite: 69]
+        # 決定境界とデータポイントの可視化
         plot_decision_boundary(X_pca, y, csvm,
                                f'CSVM Decision Boundary (Kernel: {kernel_type}) for {dataset_name}',
                                f'{dataset_name}_csvm_{kernel_type}_boundary.png')
@@ -103,7 +103,7 @@ def run_classification_experiment(digits, target_digits, dataset_name):
     # --- QSVMの実行と評価 ---
     print("\n--- Quantum Support Vector Machine (QSVM) ---")
 
-    # QSVMのための特徴マップを作成 (量子カーネルの基盤) [cite: 62]
+    # QSVMのための特徴マップを作成 (量子カーネルの基盤)
     # 2次元に削減されたデータのため、num_qubitsは2
     feature_map = create_feature_map(num_qubits=2)
 
@@ -125,7 +125,7 @@ def run_classification_experiment(digits, target_digits, dataset_name):
 
     # scikit-learnのSVC with precomputed kernel
     start_time_qsvc_train = time.time()
-    qsvm_model = SVC(kernel='precomputed') # ここでprecomputedカーネルを使用 [cite: 62]
+    qsvm_model = SVC(kernel='precomputed') # ここでprecomputedカーネルを使用
     qsvm_model.fit(kernel_matrix_train, y_train)
     qsvm_train_time = time.time() - start_time_qsvc_train
     print(f"    QSVM Training Time: {qsvm_train_time:.4f} seconds ")
@@ -139,7 +139,7 @@ def run_classification_experiment(digits, target_digits, dataset_name):
 
     print(f"    Accuracy: {qsvm_accuracy:.4f} ")
 
-    # QSVMの決定境界の可視化 [cite: 69]
+    # QSVMの決定境界の可視化
     # QuantumKernelを直接プロットすることは難しいため、
     # 学習済みのSVCモデル (`qsvm_model`) を使用してプロットします。
     # ここでは、SVCがprecomputedカーネルで学習されているため、
@@ -174,9 +174,9 @@ def run_classification_experiment(digits, target_digits, dataset_name):
 
 
 if __name__ == "__main__":
-    digits = load_digits() # 手書き数字データセットをロード [cite: 64]
+    digits = load_digits() # 手書き数字データセットをロード
 
-    # 実験1: 数字 3 と 4 [cite: 65]
+    # 実験1: 数字 3 と 4 
     run_classification_experiment(digits, [3, 4], "Digits_3_and_4")
 
     # 実験2: 数字 1 と 2
